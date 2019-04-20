@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  concourse-db:
+    image: postgres
+    environment:
+      POSTGRES_DB: concourse
+      POSTGRES_PASSWORD: concourse_pass
+      POSTGRES_USER: concourse_user
+      PGDATA: /database
+
+  concourse:
+    image: concourse/concourse
+    command: quickstart
+    volumes:
+    - "./keys:/etc/concourse/keys"
+    privileged: true
+    depends_on: [concourse-db]
+    ports: ["8080:8080"]
+    environment:
+      CONCOURSE_POSTGRES_HOST: concourse-db
+      CONCOURSE_POSTGRES_USER: concourse_user
+      CONCOURSE_POSTGRES_PASSWORD: concourse_pass
+      CONCOURSE_POSTGRES_DATABASE: concourse
+      CONCOURSE_EXTERNAL_URL: http://192.168.59.9:8080
+      CONCOURSE_ADD_LOCAL_USER: test:test
+      CONCOURSE_MAIN_TEAM_LOCAL_USER: test
+      CONCOURSE_SESSION_SIGNING_KEY: /etc/concourse/keys/web/session_signing_key
+      CONCOURSE_TSA_HOST_KEY: /etc/concourse/keys/web/tsa_host_key
+      CONCOURSE_TSA_AUTHORIZED_KEYS: /etc/concourse/keys/web/authorized_worker_keys
+      CONCOURSE_WORKER_WORKDIR_DIR: /opt/concourse/worker
+      CONCOURSE_WORKER_TSA_WORKER_PRIVATE_KEY: /etc/concourse/keys/worker/worker_key
+      CONCOURSE_WORKER_TSA_PUBLIC_KEY: /etc/concourse/keys/worker/tsa_host_key.pub
