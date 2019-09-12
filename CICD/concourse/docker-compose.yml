@@ -22,7 +22,7 @@ services:
       CONCOURSE_POSTGRES_USER: concourse_user
       CONCOURSE_POSTGRES_PASSWORD: concourse_pass
       CONCOURSE_POSTGRES_DATABASE: concourse
-      CONCOURSE_EXTERNAL_URL: http://192.168.59.9:8080
+      CONCOURSE_EXTERNAL_URL: http://eve.ceego.top
       CONCOURSE_ADD_LOCAL_USER: test:test
       CONCOURSE_MAIN_TEAM_LOCAL_USER: test
       CONCOURSE_SESSION_SIGNING_KEY: /etc/concourse/keys/web/session_signing_key
